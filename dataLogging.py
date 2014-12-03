@@ -23,7 +23,7 @@ def authenticate():
 
 def spreadsheetWriter(value):
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S %p')
-    client = authenticate()
+    client = authenticate() #call the function to log in to Google Apps
     #get the number of rows in the worksheet
     worksheetsFeed = client.GetWorksheetsFeed(key=spreadsheetKey)
     rowCount = worksheetsFeed.entry[0].row_count.text
@@ -33,6 +33,7 @@ def spreadsheetWriter(value):
     row['timestamp'] = timestamp
     row['value'] = value
     client.InsertRow(row, spreadsheetKey, worksheetId) #write the new row to spreadsheet
+    return value #send the value back to whatever called this function
 
-client = authenticate() #call the function to log in to Google Apps
-
+value = 'test' #this can be a string or some type of number, from wherever you're getting it
+print spreadsheetWriter(value) #this will call the function and then print what it returns
