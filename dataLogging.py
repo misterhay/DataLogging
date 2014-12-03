@@ -14,14 +14,14 @@ worksheetId = 'od6' #the first worksheet, where the chore data will be logged
 
 def authenticate():
     client = gdata.spreadsheet.service.SpreadsheetsService() 
-    client.debug = False # feel free to toggle this 
-    client.email = email 
-    client.password = password 
-    client.source = 'Hay Family Chore Chart' 
-    client.ProgrammaticLogin()
+    client.debug = False # feel free to toggle this if you want debug messages
+    client.email = email #the email address that you specified above
+    client.password = password #the password you entered earlier
+    client.source = 'My Datalogger' #not really necessary, but so we know were it's coming from 
+    client.ProgrammaticLogin() #the actual command to log in now that it has information
     return client #return the resulting object to the thing that called it
 
-def spreadsheetWriter(kid, choreNumber):
+def spreadsheetWriter(value):
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S %p')
     client = authenticate()
     #get the number of rows in the worksheet
@@ -34,5 +34,5 @@ def spreadsheetWriter(kid, choreNumber):
     row['value'] = value
     client.InsertRow(row, spreadsheetKey, worksheetId) #write the new row to spreadsheet
 
-client = authenticate() #log in to Google Apps
+client = authenticate() #call the function to log in to Google Apps
 
